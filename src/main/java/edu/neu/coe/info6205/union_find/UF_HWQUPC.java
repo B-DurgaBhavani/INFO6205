@@ -204,4 +204,8 @@ public class UF_HWQUPC implements UF {
         // END 
         parent[i]= parent[parent[i]];
     }
+
+    public int getCount() {
+        return count;
+    }
 }
