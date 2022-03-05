@@ -1,44 +1,42 @@
 package edu.neu.coe.info6205.union_find;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
 
 public class RandomUnion {
-	
+
+	private static int count(int n) {
+		UF_HWQUPC uf = new UF_HWQUPC(n);
+		int count = 0;
+		Random r = new Random();
+		while(uf.getCount() > 1){
+			int p = r.nextInt(n);
+			int q = r.nextInt(n);
+			uf.connect(p, q);
+			count+=1;
+		}
+		return count;
+	}
+
 	public static void main(String[] args) {
 		String graph = "";
-		
-		for (int i = 10; i<100000; i++) {
-			int N=i;
-			boolean pathCompression = true;
-			UF_HWQUPC randomUF = new UF_HWQUPC(N,pathCompression);
-			Random r = new Random();
-			int result =0;
-			
-			while(randomUF.components()>1) {
-				result++;
-				int p = r.nextInt(N);
-				int q = r.nextInt(N);
-				if(randomUF.connected(p, q)) {
-					continue;
-				}
-				randomUF.connect(p, q);
-			}
-			graph =graph+""+ N+" "+result+"\n";
-			System.out.println(" "+N+" "+result);
+		for (int i = 10; i < 100000; i++) {
+			int result = count(i);
+			graph = graph + i + " " + result + "\n";
+			System.out.println(" " + i + " " + result);
 		}
 		try {
-//			System.out.println("Graph printing: \n"+graph);
-		      FileWriter myWriter = new FileWriter("durga.txt");
+			FileWriter myWriter = new FileWriter("durga.txt");
 			System.out.println("File created..");
-		      myWriter.write(graph);
+			myWriter.write(graph);
 			System.out.println("File written..");
-		      myWriter.close();
+			myWriter.close();
 			System.out.println("File closed..");
 		}
 		catch (IOException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
+			System.out.println("An error occurred.");
+			e.printStackTrace();
 		}
 	}
 }
